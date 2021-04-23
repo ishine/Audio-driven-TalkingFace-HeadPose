@@ -6,6 +6,8 @@ Note that this code is protected under patent. It is for research purposes only 
 
 We provide a demo video [here](https://cg.cs.tsinghua.edu.cn/people/~Yongjin/Yongjin.htm) (please search for "Talking Face" in this page and click the "demo video" button).
 
+[Colab](https://colab.research.google.com/drive/1gqcqTSAGAyj48n0fmApvSPG_43BzKP37)
+
 ## Our Proposed Framework
 
 <img src = 'pipeline.jpg'>
@@ -25,7 +27,11 @@ pip install -r requirements.txt
 
 ### Download pre-trained models
 - Including pre-trained general models and models needed for face reconstruction, identity feature extraction etc
-- Download from [here](https://pan.baidu.com/s/1yAArGCkiKDICr0lM9U-_lw)(extract code:te4b) and copy to corresponding subfolders (Audio, Deep3DFaceReconstruction, render-to-video).
+- Download from [BaiduYun](https://pan.baidu.com/s/14-M5TQhNc24275W1ez-gJw)(extract code:usdm) or [GoogleDrive](https://drive.google.com/file/d/17xMNjNEsM0DhS9SKDdUQue0wlbz4Ww9o) and copy to corresponding subfolders (Audio, Deep3DFaceReconstruction, render-to-video).
+
+### Download face model for 3d face reconstruction
+- Download Basel Face Model from [https://faces.dmi.unibas.ch/bfm/main.php?nav=1-0&id=basel_face_model](https://faces.dmi.unibas.ch/bfm/main.php?nav=1-0&id=basel_face_model), and copy `01_MorphableModel.mat` to `Deep3DFaceReconstruction/BFM` folder
+- Download Expression Basis from CoarseData of [Guo et al.](https://github.com/Juyong/3DFace), and copy `Exp_Pca.bin` to `Deep3DFaceReconstruction/BFM` folder
 
 ### Fine-tune on a target peron's short video
 - 1. Prepare a talking face video that satisfies: 1) contains a single person, 2) 25 fps, 3) longer than 12 seconds, 4) without large body translation (e.g. move from the left to the right of the screen). An example is [here](Data/31.mp4). Rename the video to [person_id].mp4 (e.g. 1.mp4) and copy to Data subfolder.
@@ -64,13 +70,21 @@ This process takes about 40 minutes on a Titan Xp.
 
 ### Test on a target peron
 Place the audio file (.wav or .mp3) for test under `Audio/audio/`.
-Run
+Run [with generated poses]
 ```bash
 cd Audio/code/
 python test_personalized.py [audio] [person_id] [gpu_id]
 ```
+or [with poses from short video]
+```bash
+cd Audio/code/
+python test_personalized2.py [audio] [person_id] [gpu_id]
+```
 This program will print 'saved to xxx.mov' if the videos are successfully generated.
 It will output 2 movs, one is a video with face only (_full9.mov), the other is a video with background (_transbigbg.mov).
+
+## Colab
+A colab demo is [here](https://colab.research.google.com/drive/1gqcqTSAGAyj48n0fmApvSPG_43BzKP37).
 
 ## Acknowledgments
 The face reconstruction code is from [Deep3DFaceReconstruction](https://github.com/microsoft/Deep3DFaceReconstruction), the arcface code is from [insightface](https://github.com/deepinsight/insightface), the gan code is developed based on [pytorch-CycleGAN-and-pix2pix](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix).
